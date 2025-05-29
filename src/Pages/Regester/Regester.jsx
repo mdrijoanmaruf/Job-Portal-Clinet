@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { use, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaGithub, FaUser } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import { HiOutlineMail } from 'react-icons/hi'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { MdOutlinePhotoCamera } from 'react-icons/md'
+import { AuthContext } from '../../Contexts/AuthContexs'
+import Swal from 'sweetalert2'
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +20,8 @@ const Register = () => {
   const [error, setError] = useState('')
   const [passwordStrength, setPasswordStrength] = useState(0)
   const [passwordMatch, setPasswordMatch] = useState(true)
+  const { registerUser, updateUserProfile } = use(AuthContext)
+  const navigate = useNavigate()
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -55,14 +59,37 @@ const Register = () => {
     
     setIsLoading(true)
     setError('')
-    
+
     try {
-      // Implement your registration logic here
-      console.log('Registering with:', formData)
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500))
+      // Create user account (this automatically logs them in)
+      const userCredential = await registerUser(formData.email, formData.password)
       
-      // Reset form on success
+      // If we have additional profile data (name, photo), update the profile
+      if (formData.name || formData.photoURL) {
+        await updateUserProfile({
+          displayName: formData.name || null,
+          photoURL: formData.photoURL || null
+        })
+      }
+      
+      console.log('User registered successfully', userCredential.user)
+      
+      // Show sweet alert on successful registration
+      Swal.fire({
+        icon: 'success',
+        title: 'Registration Successful!',
+        text: 'Your account has been created and you are now logged in.',
+        confirmButtonColor: '#006A71',
+        timer: 2500,
+        timerProgressBar: true,
+        showConfirmButton: true,
+        confirmButtonText: 'Continue to Dashboard',
+      }).then((result) => {
+        // Navigate to home/dashboard since user is already logged in
+        navigate('/')
+      })
+      
+      // Reset form data
       setFormData({
         name: '',
         email: '',
@@ -70,21 +97,30 @@ const Register = () => {
         password: '',
         confirmPassword: ''
       })
-      setIsLoading(false)
     } catch (err) {
-      setError(err.message || 'Registration failed. Please try again.')
+      console.error('Registration error:', err)
+      
+      // Show specific error messages for common registration issues
+      if (err.code === 'auth/email-already-in-use') {
+        setError('This email is already registered. Please use a different email or login.')
+      } else if (err.code === 'auth/weak-password') {
+        setError('Please use a stronger password (at least 6 characters).')
+      } else {
+        setError(err.message || 'Registration failed. Please try again.')
+      }
+    } finally {
       setIsLoading(false)
     }
   }
 
   const handleGoogleSignup = () => {
+    // Implement Google authentication (would also auto-login)
     console.log('Signing up with Google')
-    // Implement Google authentication
   }
 
   const handleGithubSignup = () => {
+    // Implement GitHub authentication (would also auto-login)
     console.log('Signing up with GitHub')
-    // Implement GitHub authentication
   }
   
   // Helper function for password strength indicator

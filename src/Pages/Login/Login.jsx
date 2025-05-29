@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { use, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaGithub } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import { HiOutlineMail } from 'react-icons/hi'
 import { RiLockPasswordLine } from 'react-icons/ri'
+import { AuthContext } from '../../Contexts/AuthContexs'
+import Swal from 'sweetalert2'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -11,34 +13,93 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const { signInUser } = use(AuthContext)
+  const navigate = useNavigate()
 
   const handleEmailLogin = async (e) => {
     e.preventDefault()
     setIsLoading(true)
     setError('')
     
-    try {
-      // Implement your authentication logic here
-      console.log('Logging in with:', email, password)
-      // Wait for authentication response
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      // Mock success flow
-      setIsLoading(false)
-    } catch (err) {
-      setError('Invalid email or password. Please try again.')
-      setIsLoading(false)
-    }
+    signInUser(email, password)
+      .then((result) => {
+        // Handle successful login
+        console.log('Login successful', result)
+        
+        // Show success alert
+        Swal.fire({
+          icon: 'success',
+          title: 'Login Successful!',
+          text: 'Welcome back to JobPortal.',
+          confirmButtonColor: '#006A71',
+          timer: 1500,
+          timerProgressBar: true,
+          showConfirmButton: false
+        }).then(() => {
+          // Navigate to home or dashboard
+          navigate('/')
+        })
+        
+        // Reset form
+        setEmail('')
+        setPassword('')
+      })
+      .catch((err) => {
+        // Handle login error
+        console.error('Login failed:', err)
+        
+        // Set appropriate error message
+        if (err.code === 'auth/user-not-found') {
+          setError('No user found with this email. Please check your email or sign up.')
+        } else if (err.code === 'auth/wrong-password') {
+          setError('Incorrect password. Please try again.')
+        } else {
+          setError(err.message || 'Login failed. Please try again.')
+        }
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   const handleGoogleLogin = () => {
-    console.log('Logging in with Google')
-    // Implement Google authentication
+    setIsLoading(true)
+    
+    // Implement your Google sign-in logic here
+    
+    // After successful Google login
+    Swal.fire({
+      icon: 'success',
+      title: 'Login Successful!',
+      text: 'Welcome back to JobPortal.',
+      confirmButtonColor: '#006A71',
+      timer: 1500,
+      timerProgressBar: true,
+      showConfirmButton: false
+    }).then(() => {
+      // Navigate to home or dashboard
+      navigate('/')
+    })
   }
 
   const handleGithubLogin = () => {
-    console.log('Logging in with GitHub')
-    // Implement GitHub authentication
+    setIsLoading(true)
+    
+    // Implement your GitHub sign-in logic here
+    
+    // After successful GitHub login
+    Swal.fire({
+      icon: 'success',
+      title: 'Login Successful!',
+      text: 'Welcome back to JobPortal.',
+      confirmButtonColor: '#006A71',
+      timer: 1500,
+      timerProgressBar: true,
+      showConfirmButton: false
+    }).then(() => {
+      // Navigate to home or dashboard
+      navigate('/')
+    })
   }
 
   return (
