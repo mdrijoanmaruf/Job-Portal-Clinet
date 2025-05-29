@@ -13,7 +13,7 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
-  const { signInUser } = use(AuthContext)
+  const { signInUser, signInWithGoogle, signInWithGithub } = use(AuthContext)
   const navigate = useNavigate()
 
   const handleEmailLogin = async (e) => {
@@ -64,42 +64,70 @@ const Login = () => {
 
   const handleGoogleLogin = () => {
     setIsLoading(true)
+    setError('')
     
-    // Implement your Google sign-in logic here
-    
-    // After successful Google login
-    Swal.fire({
-      icon: 'success',
-      title: 'Login Successful!',
-      text: 'Welcome back to JobPortal.',
-      confirmButtonColor: '#006A71',
-      timer: 1500,
-      timerProgressBar: true,
-      showConfirmButton: false
-    }).then(() => {
-      // Navigate to home or dashboard
-      navigate('/')
-    })
+    signInWithGoogle()
+      .then((result) => {
+        console.log('Google login successful', result.user)
+        
+        // Show success alert
+        Swal.fire({
+          icon: 'success',
+          title: 'Login Successful!',
+          text: 'Welcome back to JobPortal.',
+          confirmButtonColor: '#006A71',
+          timer: 1500,
+          timerProgressBar: true,
+          showConfirmButton: false
+        }).then(() => {
+          // Navigate to home or dashboard
+          navigate('/')
+        })
+      })
+      .catch((err) => {
+        console.error('Google login error:', err)
+        setError(err.message || 'Google login failed. Please try again.')
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   const handleGithubLogin = () => {
     setIsLoading(true)
+    setError('')
     
-    // Implement your GitHub sign-in logic here
-    
-    // After successful GitHub login
-    Swal.fire({
-      icon: 'success',
-      title: 'Login Successful!',
-      text: 'Welcome back to JobPortal.',
-      confirmButtonColor: '#006A71',
-      timer: 1500,
-      timerProgressBar: true,
-      showConfirmButton: false
-    }).then(() => {
-      // Navigate to home or dashboard
-      navigate('/')
-    })
+    signInWithGithub()
+      .then((result) => {
+        console.log('GitHub login successful', result.user)
+        
+        // Show success alert
+        Swal.fire({
+          icon: 'success',
+          title: 'Login Successful!',
+          text: 'Welcome back to JobPortal.',
+          confirmButtonColor: '#006A71',
+          timer: 1500,
+          timerProgressBar: true,
+          showConfirmButton: false
+        }).then(() => {
+          // Navigate to home or dashboard
+          navigate('/')
+        })
+      })
+      .catch((err) => {
+        console.error('GitHub login error:', err)
+        
+        // Check for account exists with different credential error
+        if (err.code === 'auth/account-exists-with-different-credential') {
+          setError('An account already exists with the same email address but different sign-in credentials. Please sign in using the method you used previously.')
+        } else {
+          setError(err.message || 'GitHub login failed. Please try again.')
+        }
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   return (

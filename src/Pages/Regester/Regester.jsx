@@ -20,7 +20,7 @@ const Register = () => {
   const [error, setError] = useState('')
   const [passwordStrength, setPasswordStrength] = useState(0)
   const [passwordMatch, setPasswordMatch] = useState(true)
-  const { registerUser, updateUserProfile } = use(AuthContext)
+  const { registerUser, updateUserProfile, signInWithGoogle, signInWithGithub } = use(AuthContext)
   const navigate = useNavigate()
 
   const handleInputChange = (e) => {
@@ -114,13 +114,73 @@ const Register = () => {
   }
 
   const handleGoogleSignup = () => {
-    // Implement Google authentication (would also auto-login)
-    console.log('Signing up with Google')
+    setIsLoading(true)
+    setError('')
+    
+    signInWithGoogle()
+      .then((result) => {
+        console.log('Google signup successful', result.user)
+        
+        // Show success alert
+        Swal.fire({
+          icon: 'success',
+          title: 'Registration Successful!',
+          text: 'Your account has been created with Google and you are now logged in.',
+          confirmButtonColor: '#006A71',
+          timer: 2500,
+          timerProgressBar: true,
+          showConfirmButton: true,
+          confirmButtonText: 'Continue to Dashboard',
+        }).then(() => {
+          // Navigate to home or dashboard
+          navigate('/')
+        })
+      })
+      .catch((err) => {
+        console.error('Google signup error:', err)
+        setError(err.message || 'Google signup failed. Please try again.')
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   const handleGithubSignup = () => {
-    // Implement GitHub authentication (would also auto-login)
-    console.log('Signing up with GitHub')
+    setIsLoading(true)
+    setError('')
+    
+    signInWithGithub()
+      .then((result) => {
+        console.log('GitHub signup successful', result.user)
+        
+        // Show success alert
+        Swal.fire({
+          icon: 'success',
+          title: 'Registration Successful!',
+          text: 'Your account has been created with GitHub and you are now logged in.',
+          confirmButtonColor: '#006A71',
+          timer: 2500,
+          timerProgressBar: true,
+          showConfirmButton: true,
+          confirmButtonText: 'Continue to Dashboard',
+        }).then(() => {
+          // Navigate to home or dashboard
+          navigate('/')
+        })
+      })
+      .catch((err) => {
+        console.error('GitHub signup error:', err)
+        
+        // Check for account exists with different credential error
+        if (err.code === 'auth/account-exists-with-different-credential') {
+          setError('An account already exists with the same email address but different sign-in credentials. Please sign in using the method you used previously.')
+        } else {
+          setError(err.message || 'GitHub signup failed. Please try again.')
+        }
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
   
   // Helper function for password strength indicator
