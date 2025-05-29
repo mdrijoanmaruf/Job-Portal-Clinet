@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { useLoaderData, Link } from 'react-router-dom'
+import { useLoaderData, Link, useNavigate } from 'react-router-dom'
 import { FiMapPin, FiBriefcase, FiCalendar, FiMail, FiUser, FiDollarSign, FiChevronRight, FiShare2, FiBookmark, FiClock, FiArrowLeft } from 'react-icons/fi'
 import { motion } from 'framer-motion'
 
 const JobDetails = () => {
+  const navigate = useNavigate()
   const job = useLoaderData()
   const [isLoading, setIsLoading] = useState(true)
   const [applying, setApplying] = useState(false)
@@ -112,12 +113,11 @@ const JobDetails = () => {
   const handleApply = () => {
     setApplying(true)
     
-    // Simulate submission process
+    // Navigate to the job application page after a brief delay to show the loading state
     setTimeout(() => {
       setApplying(false)
-      // Here you would typically show a success message or redirect
-      alert('Your application has been submitted successfully!')
-    }, 1500)
+      navigate(`/jobApply/${job._id}`) 
+    }, 800)
   }
 
   const handleSave = () => {
@@ -224,12 +224,7 @@ const JobDetails = () => {
                   : "bg-white text-[#006A71] hover:bg-gray-100 shadow-md hover:shadow-lg transform hover:-translate-y-1"
               }`}
             >
-              {applying ? (
-                <>
-                  <span className="inline-block w-4 h-4 border-2 border-[#006A71] border-t-transparent rounded-full animate-spin"></span>
-                  Applying...
-                </>
-              ) : "Apply Now"}
+              Apply Now
             </button>
           </div>
         </motion.div>
@@ -468,34 +463,3 @@ const JobDetails = () => {
 
 export default JobDetails
 
-// Data Example : 
-// {
-// "_id": "683880caecf4b48903997bf5",
-// "title": "Software Engineer",
-// "location": "Halishohor, Chittagong",
-// "jobType": "Hybrid",
-// "category": "Engineering",
-// "applicationDeadline": "2024-12-31",
-// "salaryRange": {
-// "min": 40000,
-// "max": 60000,
-// "currency": "bdt"
-// },
-// "description": "We are seeking a skilled Software Engineer to join our dynamic team. The candidate will work on diverse projects and contribute to innovative solutions.",
-// "company": "Favorite IT",
-// "requirements": [
-// "JavaScript",
-// "React",
-// "Node.js",
-// "MongoDB"
-// ],
-// "responsibilities": [
-// "Develop and maintain software",
-// "Collaborate with the team",
-// "Participate in code reviews"
-// ],
-// "status": "active",
-// "hr_email": "hr@techsolutions.com",
-// "hr_name": "Farhan Rahman",
-// "company_logo": "https://i.ibb.co/mXD5MNf/facebook.png"
-// }

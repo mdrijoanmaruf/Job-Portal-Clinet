@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaFacebook, FaTwitter, FaLinkedinIn, FaGithub, FaInstagram } from 'react-icons/fa'
+import { SiLeetcode } from 'react-icons/si'
 import { HiOutlineMail } from 'react-icons/hi'
 
 const Footer = () => {
@@ -23,17 +24,23 @@ const Footer = () => {
               Connecting talented professionals with their dream careers. Find your perfect job match with our advanced job matching platform.
             </p>
             <div className="flex items-center space-x-4">
-              <a href="#" className="text-gray-500 hover:text-[#006A71] transition-colors">
-                <FaFacebook className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-500 hover:text-[#006A71] transition-colors">
-                <FaTwitter className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-500 hover:text-[#006A71] transition-colors">
+              <a href="https://www.linkedin.com/in/mdrijoanmaruf/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#006A71] transition-colors">
                 <FaLinkedinIn className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-500 hover:text-[#006A71] transition-colors">
+              <a href="https://x.com/rijianmaruf" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#006A71] transition-colors">
+                <FaTwitter className="h-5 w-5" />
+              </a>
+              <a href="https://www.facebook.com/md.rijoanmaruf" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#006A71] transition-colors">
+                <FaFacebook className="h-5 w-5" />
+              </a>
+              <a href="https://www.instagram.com/rijoanmaruf" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#006A71] transition-colors">
                 <FaInstagram className="h-5 w-5" />
+              </a>
+              <a href="https://github.com/mdrijoanmaruf" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#006A71] transition-colors">
+                <FaGithub className="h-5 w-5" />
+              </a>
+              <a href="https://leetcode.com/u/mdrijoanmaruf/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-[#006A71] transition-colors">
+                <SiLeetcode className="h-5 w-5" />
               </a>
             </div>
           </div>

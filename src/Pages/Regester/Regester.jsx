@@ -202,34 +202,34 @@ const Register = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F2EFE7]/50 to-white overflow-hidden relative py-10 px-4">
-      {/* Background decorations - keep these */}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F2EFE7]/50 to-white overflow-hidden relative py-2 sm:py-10 px-0 sm:px-4">
+      {/* Background decorations - hidden on mobile */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.6 }}
         transition={{ duration: 1.5 }}
-        className="absolute -top-24 -left-24 w-96 h-96 bg-[#9ACBD0]/10 rounded-full blur-3xl"
+        className="absolute -top-24 -left-24 w-96 h-96 bg-[#9ACBD0]/10 rounded-full blur-3xl hidden sm:block"
       ></motion.div>
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.6 }}
         transition={{ duration: 1.5, delay: 0.3 }}
-        className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#48A6A7]/10 rounded-full blur-3xl"
+        className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#48A6A7]/10 rounded-full blur-3xl hidden sm:block"
       ></motion.div>
       
-      {/* Main content container with max-w-7xl and border */}
-      <div className="max-w-7xl w-full mx-auto border border-gray-200/60 rounded-3xl shadow-2xl bg-white/40 backdrop-blur-sm overflow-hidden z-10 relative">
+      {/* Main content container - border and styling hidden on mobile */}
+      <div className="w-full sm:max-w-7xl mx-0 sm:mx-auto border-0 sm:border border-gray-200/60 rounded-none sm:rounded-3xl shadow-none sm:shadow-2xl bg-transparent sm:bg-white/40 sm:backdrop-blur-sm overflow-hidden z-10 relative">
         <div className="flex flex-col md:flex-row">
           {/* Left side - Form */}
-          <div className="w-full md:w-3/5 flex items-center justify-center p-6 sm:p-12 relative z-10">
+          <div className="w-full md:w-3/5 flex items-center justify-center p-0 sm:p-6 md:p-12 relative z-10">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="w-full max-w-lg space-y-8 bg-white/90 backdrop-blur-xl p-8 rounded-2xl shadow-lg border-2 border-[#006A71]/10"
+              className="w-full max-w-lg space-y-6 sm:space-y-8 bg-white sm:bg-white/90 sm:backdrop-blur-xl p-5 sm:p-8 rounded-none sm:rounded-2xl shadow-md sm:shadow-lg border-0 sm:border-2 sm:border-[#006A71]/10"
             >
               <div className="text-center">
-                <h2 className="text-3xl font-bold text-gray-900 tracking-tight">Create an Account</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">Create an Account</h2>
                 <p className="mt-2 text-gray-600">Join thousands of job seekers finding their dream careers</p>
               </div>
               

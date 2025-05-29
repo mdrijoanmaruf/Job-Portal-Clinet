@@ -9,6 +9,10 @@ import TermsOfService from "../Extra/TermsOfService";
 import CookiePolicy from "../Extra/CookiePolicy";
 import Accessibility from "../Extra/Accessibility";
 import JobDetails from "../Pages/JobDetails/JobDetails";
+import Contact from "../Pages/Contact/Contact";
+import About from "../Pages/About/About";
+import PrivateRoute from "./PrivateRoute";
+import JobApply from "../Pages/JobApply/JobApply";
 
 export const router = createBrowserRouter([
     {
@@ -38,6 +42,20 @@ export const router = createBrowserRouter([
                   }
                   return response.json()
                 }
+            },
+            {
+                path:'jobApply/:id',
+                element: <PrivateRoute>
+                    <JobApply></JobApply>
+                </PrivateRoute>
+            },
+            {
+                path: '/contact',
+                Component: Contact
+            },
+            {
+                path: '/about',
+                Component: About
             },
             {
                 path: '/privacy',
