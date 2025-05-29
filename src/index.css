@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cream: #F2EFE7;
+  --sky-blue: #9ACBD0;
+  --teal: #48A6A7;
+  --dark-teal: #006A71;
+}
+
+@layer base {
+  :root {
+    --color-cream: 242 239 231;
+    --color-sky-blue: 154 203 208;
+    --color-teal: 72 166 167;
+    --color-dark-teal: 0 106 113;
+  }
+}
