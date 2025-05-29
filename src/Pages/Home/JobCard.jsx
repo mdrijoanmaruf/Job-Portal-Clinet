@@ -98,8 +98,7 @@ const JobCard = ({ job }) => {
       {/* Card Footer */}
       <div className="p-4 bg-gray-50 flex items-center justify-between">
         <div className="flex flex-col space-y-1">
-          <div className="flex items-center text-sm">
-            <FiDollarSign className="mr-1 text-gray-500" />
+          <div className="text-sm">
             <span className="text-gray-700 font-medium text-sm">
               {salaryRange ? 
                 `${formatSalary(salaryRange.min, salaryRange.currency)} - ${formatSalary(salaryRange.max, salaryRange.currency)}` : 

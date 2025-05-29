@@ -4,6 +4,11 @@ import Home from "../Pages/Home/Home";
 import PageNotFound from "../Pages/ErrorPage/PageNotFound";
 import Regester from "../Pages/Regester/Regester";
 import Login from "../Pages/Login/Login";
+import PrivacyPolicy from "../Extra/PrivacyPolicy";
+import TermsOfService from "../Extra/TermsOfService";
+import CookiePolicy from "../Extra/CookiePolicy";
+import Accessibility from "../Extra/Accessibility";
+import JobDetails from "../Pages/JobDetails/JobDetails";
 
 export const router = createBrowserRouter([
     {
@@ -13,7 +18,7 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                Component:Home
+                Component: Home
             },
             {
                 path: '/register',
@@ -22,7 +27,35 @@ export const router = createBrowserRouter([
             {
                 path: '/login',
                 Component: Login
-            }
+            },
+            {
+                path: 'job/:id',
+                Component: JobDetails,
+                loader: async ({ params }) => {
+                  const response = await fetch(`http://localhost:3000/jobs/${params.id}`)
+                  if (!response.ok) {
+                    throw new Error(`Failed to load job: ${response.status} ${response.statusText}`)
+                  }
+                  return response.json()
+                }
+            },
+            {
+                path: '/privacy',
+                Component: PrivacyPolicy
+            },
+            {
+                path: '/terms',
+                Component: TermsOfService
+            },
+            {
+                path: '/cookies',
+                Component: CookiePolicy
+            },
+            {
+                path: '/accessibility',
+                Component: Accessibility
+            },
+            
         ]
     }
 ])
