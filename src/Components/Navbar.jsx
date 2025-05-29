@@ -4,7 +4,7 @@ import { AuthContext } from '../Contexts/AuthContexs'
 import Swal from 'sweetalert2'
 
 // Import React Icons
-import { MdWork, MdDashboard, MdBookmark, MdKeyboardArrowDown } from 'react-icons/md'
+import { MdWork, MdDashboard, MdBookmark, MdKeyboardArrowDown, MdAssignment } from 'react-icons/md'
 import { FaUser, FaSignOutAlt } from 'react-icons/fa'
 import { HiMenu, HiX } from 'react-icons/hi'
 
@@ -142,6 +142,19 @@ const Navbar = () => {
               <span>Contact</span>
               {isActive('/contact') && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#006A71] transform transition-all duration-300"></span>}
             </Link>
+            {user && (
+              <Link 
+                to="/my-applications" 
+                className={`transition-all px-3 py-2 rounded-md text-md font-medium relative ${
+                  isActive('/my-applications') 
+                    ? 'text-[#006A71] font-semibold' 
+                    : 'text-gray-600 hover:text-[#006A71]'
+                }`}
+              >
+                <span>My Applications</span>
+                {isActive('/my-applications') && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#006A71] transform transition-all duration-300"></span>}
+              </Link>
+            )}
           </div>
           
           {/* Auth buttons or user profile */}
@@ -203,6 +216,11 @@ const Navbar = () => {
                       <Link to="/saved-jobs" className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 group">
                         <MdBookmark className="h-4 w-4 mr-3 text-gray-400 group-hover:text-[#006A71]" />
                         <span className="group-hover:text-[#006A71]">Saved Jobs</span>
+                      </Link>
+                      
+                      <Link to="/my-applications" className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 group">
+                        <MdAssignment className="h-4 w-4 mr-3 text-gray-400 group-hover:text-[#006A71]" />
+                        <span className="group-hover:text-[#006A71]">My Applications</span>
                       </Link>
                     </div>
                     
@@ -280,6 +298,11 @@ const Navbar = () => {
             <Link to="/contact" className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/contact') ? 'text-[#006A71] bg-gray-50' : 'text-gray-600 hover:bg-gray-50 hover:text-[#006A71]'}`}>
               Contact
             </Link>
+            {user && (
+              <Link to="/my-applications" className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/my-applications') ? 'text-[#006A71] bg-gray-50' : 'text-gray-600 hover:bg-gray-50 hover:text-[#006A71]'}`}>
+                My Applications
+              </Link>
+            )}
           </div>
           <div className="pt-4 pb-3 border-t border-gray-200">
             {user ? (
@@ -314,6 +337,10 @@ const Navbar = () => {
                 <Link to="/saved-jobs" className="flex items-center px-4 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-[#006A71]">
                   <MdBookmark className="h-5 w-5 mr-3 text-gray-400" />
                   Saved Jobs
+                </Link>
+                <Link to="/my-applications" className="flex items-center px-4 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-[#006A71]">
+                  <MdAssignment className="h-5 w-5 mr-3 text-gray-400" />
+                  My Applications
                 </Link>
                 <button 
                   onClick={handleLogout}
@@ -374,6 +401,11 @@ const Navbar = () => {
             <Link to="/saved-jobs" className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 group">
               <MdBookmark className="h-4 w-4 mr-3 text-gray-400 group-hover:text-[#006A71]" />
               <span className="group-hover:text-[#006A71]">Saved Jobs</span>
+            </Link>
+            
+            <Link to="/my-applications" className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 group">
+              <MdAssignment className="h-4 w-4 mr-3 text-gray-400 group-hover:text-[#006A71]" />
+              <span className="group-hover:text-[#006A71]">My Applications</span>
             </Link>
           </div>
           
