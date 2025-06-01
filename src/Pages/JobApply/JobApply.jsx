@@ -54,7 +54,7 @@ const JobApply = () => {
     });
 
     // Fixed URL - update port to match your backend server (likely 5000, 3000, or 8000)
-    axios.post("http://localhost:3000/jobApplication", applicantInfo)
+    axios.post("https://job-portal-server-sooty-theta.vercel.app/jobApplication", applicantInfo)
       .then((response) => {
         console.log("Application submitted successfully:", response.data);
         setIsSubmitting(false);
