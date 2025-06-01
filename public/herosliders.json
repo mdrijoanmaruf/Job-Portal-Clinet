@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "Find Your Dream Job Today",
+    "subtitle": "Discover thousands of job opportunities with all the information you need",
+    "image": "https://images.unsplash.com/photo-1568992687947-868a62a9f521?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80",
+    "cta": "Search Jobs"
+  },
+  {
+    "id": 2,
+    "title": "Connect With Top Employers",
+    "subtitle": "Your next career move starts here. Connect with industry-leading companies",
+    "image": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1784&q=80",
+    "cta": "Join Now"
+  },
+  {
+    "id": 3,
+    "title": "Take Your Career to the Next Level",
+    "subtitle": "Find roles that match your experience and help you grow professionally",
+    "image": "https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1769&q=80",
+    "cta": "Explore Opportunities"
+  }
+]
