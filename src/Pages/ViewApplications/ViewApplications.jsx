@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { FaSpinner, FaUser, FaEnvelope, FaPhone, FaFileAlt, FaExternalLinkAlt, FaDownload, FaCheck, FaTimes, FaSearch } from 'react-icons/fa';
+import { FaSpinner, FaEnvelope, FaFileAlt, FaExternalLinkAlt, FaGithub, FaLinkedin, FaCheck, FaTimes, FaSearch } from 'react-icons/fa';
 import { FiArrowLeft, FiAlertCircle, FiCalendar } from 'react-icons/fi';
 import Swal from 'sweetalert2';
 
@@ -24,7 +24,7 @@ const ViewApplications = () => {
         const jobData = await jobResponse.json();
         setJob(jobData);
         
-        // Fetch applications for this job
+        // Fetch applications for this job - using the correct endpoint
         const applicationsResponse = await fetch(`https://job-portal-server-sooty-theta.vercel.app/applications/job/${id}`);
         if (!applicationsResponse.ok) throw new Error('Failed to fetch applications');
         const applicationsData = await applicationsResponse.json();
@@ -45,6 +45,15 @@ const ViewApplications = () => {
   // Update application status
   const updateApplicationStatus = async (applicationId, newStatus) => {
     try {
+      Swal.fire({
+        title: 'Updating Status',
+        text: 'Please wait...',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
       const response = await fetch(`https://job-portal-server-sooty-theta.vercel.app/applications/${applicationId}`, {
         method: 'PATCH',
         headers: {
@@ -79,6 +88,7 @@ const ViewApplications = () => {
 
   // Format date
   const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
@@ -86,9 +96,8 @@ const ViewApplications = () => {
   // Filter applications based on search and status
   const filteredApplications = applications.filter(app => {
     const matchesSearch = 
-      app.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      app.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      app.phone?.includes(searchTerm);
+      (app.name?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
+      (app.email?.toLowerCase() || '').includes(searchTerm.toLowerCase());
     
     const matchesStatus = filterStatus === 'all' || app.status === filterStatus;
     
@@ -174,7 +183,7 @@ const ViewApplications = () => {
         <div className="relative w-full md:w-auto">
           <input
             type="text"
-            placeholder="Search applicants..."
+            placeholder="Search by name or email..."
             className="w-full md:w-80 px-4 py-2 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#006A71]"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -250,25 +259,34 @@ const ViewApplications = () => {
                       </a>
                     </div>
                     
-                    <div className="flex items-center text-gray-600">
-                      <FaPhone className="mr-2 text-[#006A71]" />
-                      <a href={`tel:${application.phone}`} className="hover:text-[#006A71]">
-                        {application.phone}
-                      </a>
+                    <div className="flex flex-wrap items-center gap-4 mt-2">
+                      {application.github && (
+                        <a 
+                          href={application.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center text-gray-600 hover:text-[#006A71]"
+                        >
+                          <FaGithub className="mr-1" />
+                          GitHub
+                        </a>
+                      )}
+                      
+                      {application.linkedin && (
+                        <a 
+                          href={application.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center text-gray-600 hover:text-[#006A71]"
+                        >
+                          <FaLinkedin className="mr-1" />
+                          LinkedIn
+                        </a>
+                      )}
                     </div>
                   </div>
                   
                   <div className="flex flex-wrap gap-2 mt-3">
-                    {application.experience && (
-                      <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
-                        {application.experience} Experience
-                      </span>
-                    )}
-                    {application.education && (
-                      <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                        {application.education}
-                      </span>
-                    )}
                     <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-700">
                       Applied: {formatDate(application.appliedDate || new Date())}
                     </span>
@@ -277,27 +295,15 @@ const ViewApplications = () => {
                 
                 <div className="mt-4 md:mt-0 flex flex-col items-end justify-between">
                   <div className="flex flex-wrap gap-2">
-                    {application.resumeLink && (
+                    {application.resume && (
                       <a 
-                        href={application.resumeLink} 
+                        href={application.resume} 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="inline-flex items-center px-4 py-2 bg-[#006A71] text-white rounded-md hover:bg-[#48A6A7] transition-colors"
                       >
                         <FaFileAlt className="mr-2" />
                         View Resume
-                      </a>
-                    )}
-                    
-                    {application.portfolioLink && (
-                      <a 
-                        href={application.portfolioLink} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md transition-colors"
-                      >
-                        <FaExternalLinkAlt className="mr-2" />
-                        Portfolio
                       </a>
                     )}
                   </div>
@@ -321,9 +327,27 @@ const ViewApplications = () => {
               {application.coverLetter && (
                 <div className="mt-4 pt-4 border-t border-gray-100">
                   <h4 className="text-lg font-medium text-gray-800 mb-2">Cover Letter</h4>
-                  <p className="text-gray-600">{application.coverLetter}</p>
+                  <p className="text-gray-600 whitespace-pre-line">{application.coverLetter}</p>
                 </div>
               )}
+              
+              {/* Quick actions */}
+              <div className="mt-4 pt-4 border-t border-gray-100 flex justify-end gap-2">
+                <button 
+                  onClick={() => updateApplicationStatus(application._id, 'rejected')}
+                  className="px-3 py-1 text-sm rounded-md bg-red-50 text-red-600 hover:bg-red-100 transition-colors"
+                >
+                  <FaTimes className="inline mr-1" />
+                  Reject
+                </button>
+                <button 
+                  onClick={() => updateApplicationStatus(application._id, 'shortlisted')}
+                  className="px-3 py-1 text-sm rounded-md bg-green-50 text-green-600 hover:bg-green-100 transition-colors"
+                >
+                  <FaCheck className="inline mr-1" />
+                  Shortlist
+                </button>
+              </div>
             </div>
           ))}
         </div>

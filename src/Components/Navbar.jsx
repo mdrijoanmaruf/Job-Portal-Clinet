@@ -109,6 +109,7 @@ const Navbar = () => {
               <span>Home</span>
               {isActive('/') && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#006A71] transform transition-all duration-300"></span>}
             </Link>
+            
             <Link 
               to="/jobs" 
               className={`transition-all px-3 py-2 rounded-md text-md font-medium relative ${
@@ -120,28 +121,7 @@ const Navbar = () => {
               <span>Jobs</span>
               {isActive('/jobs') && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#006A71] transform transition-all duration-300"></span>}
             </Link>
-            <Link 
-              to="/about" 
-              className={`transition-all px-3 py-2 rounded-md text-md font-medium relative ${
-                isActive('/about') 
-                  ? 'text-[#006A71] font-semibold' 
-                  : 'text-gray-600 hover:text-[#006A71]'
-              }`}
-            >
-              <span>About</span>
-              {isActive('/about') && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#006A71] transform transition-all duration-300"></span>}
-            </Link>
-            <Link 
-              to="/contact" 
-              className={`transition-all px-3 py-2 rounded-md text-md font-medium relative ${
-                isActive('/contact') 
-                  ? 'text-[#006A71] font-semibold' 
-                  : 'text-gray-600 hover:text-[#006A71]'
-              }`}
-            >
-              <span>Contact</span>
-              {isActive('/contact') && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#006A71] transform transition-all duration-300"></span>}
-            </Link>
+            
             {user && (
               <>
                 <Link 
@@ -181,6 +161,31 @@ const Navbar = () => {
                 </Link>
               </>
             )}
+            
+            {/* About and Contact moved to the end */}
+            <Link 
+              to="/about" 
+              className={`transition-all px-3 py-2 rounded-md text-md font-medium relative ${
+                isActive('/about') 
+                  ? 'text-[#006A71] font-semibold' 
+                  : 'text-gray-600 hover:text-[#006A71]'
+              }`}
+            >
+              <span>About</span>
+              {isActive('/about') && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#006A71] transform transition-all duration-300"></span>}
+            </Link>
+            
+            <Link 
+              to="/contact" 
+              className={`transition-all px-3 py-2 rounded-md text-md font-medium relative ${
+                isActive('/contact') 
+                  ? 'text-[#006A71] font-semibold' 
+                  : 'text-gray-600 hover:text-[#006A71]'
+              }`}
+            >
+              <span>Contact</span>
+              {isActive('/contact') && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#006A71] transform transition-all duration-300"></span>}
+            </Link>
           </div>
           
           {/* Auth buttons or user profile */}
@@ -323,12 +328,6 @@ const Navbar = () => {
             <Link to="/jobs" className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/jobs') ? 'text-[#006A71] bg-gray-50' : 'text-gray-600 hover:bg-gray-50 hover:text-[#006A71]'}`}>
               Jobs
             </Link>
-            <Link to="/about" className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/about') ? 'text-[#006A71] bg-gray-50' : 'text-gray-600 hover:bg-gray-50 hover:text-[#006A71]'}`}>
-              About
-            </Link>
-            <Link to="/contact" className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/contact') ? 'text-[#006A71] bg-gray-50' : 'text-gray-600 hover:bg-gray-50 hover:text-[#006A71]'}`}>
-              Contact
-            </Link>
             {user && (
               <>
                 <Link to="/my-applications" className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/my-applications') ? 'text-[#006A71] bg-gray-50' : 'text-gray-600 hover:bg-gray-50 hover:text-[#006A71]'}`}>
@@ -342,6 +341,12 @@ const Navbar = () => {
                 </Link>
               </>
             )}
+            <Link to="/about" className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/about') ? 'text-[#006A71] bg-gray-50' : 'text-gray-600 hover:bg-gray-50 hover:text-[#006A71]'}`}>
+              About
+            </Link>
+            <Link to="/contact" className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/contact') ? 'text-[#006A71] bg-gray-50' : 'text-gray-600 hover:bg-gray-50 hover:text-[#006A71]'}`}>
+              Contact
+            </Link>
           </div>
           <div className="pt-4 pb-3 border-t border-gray-200">
             {user ? (
