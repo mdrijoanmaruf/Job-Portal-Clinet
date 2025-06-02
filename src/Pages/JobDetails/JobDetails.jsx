@@ -438,24 +438,6 @@ const JobDetails = () => {
             </motion.div>
           </div>
         </div>
-        
-        {/* Similar Jobs (Optional) */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="mt-12 bg-white rounded-2xl shadow-sm p-8 border border-gray-100 hover:shadow-md transition-shadow"
-        >
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-            <span className="w-8 h-8 rounded-full bg-[#006A71]/10 flex items-center justify-center mr-3">
-              <FiBriefcase className="text-[#006A71]" />
-            </span>
-            Similar Jobs You Might Like
-          </h2>
-          <p className="text-gray-500 text-center py-8">
-            Similar job recommendations will appear here based on your browsing history and preferences.
-          </p>
-        </motion.div>
       </div>
     </div>
   )
