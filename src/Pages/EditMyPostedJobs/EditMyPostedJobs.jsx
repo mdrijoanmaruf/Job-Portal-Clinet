@@ -161,7 +161,7 @@ const EditMyPostedJobs = () => {
       });
 
       // Navigate back to my jobs page
-      navigate('/my-posted_j_jobs');
+      navigate('/my-posted-jobs');
     } catch (error) {
       console.error('Error updating job:', error);
       Swal.fire({

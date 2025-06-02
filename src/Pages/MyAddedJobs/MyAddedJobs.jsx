@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContexs';
-import { FaSpinner, FaEdit, FaTrash, FaEye, FaSearch } from 'react-icons/fa';
+import { FaSpinner, FaEdit, FaTrash, FaEye, FaSearch, FaUsers } from 'react-icons/fa';
 import { FiAlertCircle, FiCalendar } from 'react-icons/fi';
 import Swal from 'sweetalert2';
 
@@ -245,6 +245,16 @@ const MyAddedJobs = () => {
                     <FaEye className="mr-2" />
                     View
                   </Link>
+                  
+                  {/* Add this new button */}
+                  <Link 
+                    to={`/viewApplications/${job._id}`}
+                    className="inline-flex items-center px-4 py-2 bg-purple-50 hover:bg-purple-100 text-purple-600 rounded-md transition-colors"
+                  >
+                    <FaUsers className="mr-2" />
+                    View Applications
+                  </Link>
+                  
                   <Link 
                     to={`/edit-job/${job._id}`}
                     className="inline-flex items-center px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-md transition-colors"
@@ -252,6 +262,7 @@ const MyAddedJobs = () => {
                     <FaEdit className="mr-2" />
                     Edit
                   </Link>
+                  
                   <button 
                     onClick={() => handleDeleteJob(job._id)}
                     className="inline-flex items-center px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-md transition-colors"
